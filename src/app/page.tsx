@@ -1,12 +1,8 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useTheme } from "next-themes";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
-
-    const { setTheme } = useTheme()
 
     return (
         <div className="flex min-h-screen w-full flex-col">
@@ -49,14 +45,7 @@ export default function Home() {
                         Settings
                     </Link>
                     
-                    <div className="flex gap-3 justify-end">
-                        <button className="py-1 px-2 bg-violet-400 rounded-md" onClick={() => setTheme('dark')}>
-                            Dark
-                        </button>
-                        <button className="py-1 px-2 bg-violet-400 rounded-md" onClick={() => setTheme('light')}>
-                            Light
-                        </button>
-                    </div>
+                    <ThemeToggle/>
                 </nav>
             </header>
         </div>
