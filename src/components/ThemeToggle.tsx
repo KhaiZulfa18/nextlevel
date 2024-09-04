@@ -1,5 +1,7 @@
 "use client";
 import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { IconSun, IconMoon } from "@tabler/icons-react";
 
 export default function ThemeToggle() {
 
@@ -7,9 +9,9 @@ export default function ThemeToggle() {
 
     return (
         <div className="flex gap-3 justify-end">
-            <button className="py-1 px-2 bg-violet-400 rounded-md" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-                {theme === 'dark' ? '☀️' : '🌙'}
-            </button>
+            <Button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                {theme === 'dark' ? <IconSun size={16}/> : <IconMoon size={16}/>}
+            </Button>
         </div>
     )
 }
