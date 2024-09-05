@@ -17,7 +17,7 @@ export default function ThemeToggle() {
     
     return (
         <div className="flex gap-3 justify-end">
-            <Button variant={'outline'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+            <Button variant={'outline'} size={'sm'} className="rounded-xl" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
                 {theme === 'dark' ? <IconSun size={16}/> : <IconMoon size={16}/>}
             </Button>
         </div>
