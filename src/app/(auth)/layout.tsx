@@ -14,10 +14,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                 <ThemeToggle />
             </div>
             <div className="mx-auto w-full max-w-md space-y-4">
-                <div className="flex justify-center">
+                <Link href={"/"} className="flex justify-center">
                     <IconMountain size={32} />
                     <span className="ml-2 text-3xl font-mono">NextLevel</span>
-                </div>
+                </Link>
                 {children}
             </div>
         </div>

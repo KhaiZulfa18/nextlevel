@@ -36,13 +36,17 @@ export default function SignInPage() {
                     <span className="text-primary">or</span>
                     <Separator className="flex-1" />
                 </div>
-                <Button variant="outline" className="flex place-items-center gap-2 border-gray-500">
-                    <IconBrandGoogle size={16} />
-                    Sign in with Google
+                <Button variant="outline" className="flex place-items-center gap-2 border-gray-500" asChild>
+                    <Link href="/signin/google" prefetch={false}>
+                        <IconBrandGoogle size={16} />
+                        Sign in with Google
+                    </Link>
                 </Button>
-                <Button variant="outline" className="flex place-items-center gap-2 border-gray-500">
-                    <IconBrandGithub size={16} />
-                    Sign in with GitHub
+                <Button variant="outline" className="flex place-items-center gap-2 border-gray-500" asChild>
+                    <Link href="/signin/github" prefetch={false}>
+                        <IconBrandGithub size={16} />
+                        Sign in with GitHub
+                    </Link>
                 </Button>
             </CardFooter>
         </Card>

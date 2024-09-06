@@ -10,7 +10,7 @@ export default function Navbar() {
         <>
         <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 md:px-16">
             <nav className="hidden items-center gap-8 md:flex">
-                <Link href="#" className="flex items-center gap-2 mr-8" prefetch={false}>
+                <Link href="/" className="flex items-center gap-2 mr-8" prefetch={false}>
                     <IconMountain size={24} />
                     <span className="text-lg font-mono">NextLevel</span>
                 </Link>
@@ -28,10 +28,14 @@ export default function Navbar() {
                 </Link>
             </nav>
             <div className="hidden md:flex items-center gap-2">
-                <Button variant={'default'} size={'sm'}>Sign In</Button>
+                <Button variant={'default'} size={'sm'} asChild>
+                    <Link href="/signin" prefetch={false}> 
+                        Sign In 
+                    </Link>
+                </Button>
                 <ThemeToggle />
             </div>
-            <div className="lg:hidden flex w-full items-center justify-between gap-2">
+            <div className="md:hidden flex w-full items-center justify-between gap-2">
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button variant="outline" size="icon" className="rounded-xl lg:hidden">
@@ -59,7 +63,11 @@ export default function Navbar() {
                                     Contact
                                 </Link>
                             </nav>
-                            <Button>Sign In</Button>
+                            <Button variant={'default'} size={'sm'} asChild>
+                                <Link href="/signin" prefetch={false}> 
+                                    Sign In 
+                                </Link>
+                            </Button>
                         </div>
                     </SheetContent>
                 </Sheet>

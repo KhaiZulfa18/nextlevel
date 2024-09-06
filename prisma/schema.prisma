@@ -5,26 +5,40 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
+    previewFeatures = ["relationJoins"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id       String    @id
-  name     String
-  email    String?
-  password String?
-  sessions Session[]
+    id              String    @id   @default(cuid())
+    name            String
+    email           String?
+    emailVerified   DateTime? @map("email_verified")
+    password        String?
+    createdAt       DateTime  @default(now()) @map("created_at")
+    sessions        Session[]
+    accounts        Account[]
 }
 
 model Session {
-  id        String   @id
-  userId    String
-  expiresAt DateTime
+  id        String  @id     @default(cuid())
+  userId    String  @map("user_id")
+  expiresAt DateTime    @map("expires_at")
 
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  user      User    @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Account {
+    id  String  @id         @default(cuid())
+    userId      String      @map("user_id")
+    provider    String
+    providerId  Int      @map("provider_id")
+    createdAt   DateTime    @default(now()) @map("created_at")
+    
+    user        User        @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
