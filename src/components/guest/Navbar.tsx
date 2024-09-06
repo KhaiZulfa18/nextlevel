@@ -3,8 +3,15 @@ import ThemeToggle from "../ThemeToggle";
 import { IconMenu2, IconMountain } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
+import { validateRequest } from "@/auth";
+import { signout } from "@/lib/signout";
+import { Badge } from "../ui/badge";
 
-export default function Navbar() {
+export default async function Navbar() {
+
+    const { user } = await validateRequest();
+
+
 
     return (
         <>
@@ -28,11 +35,22 @@ export default function Navbar() {
                 </Link>
             </nav>
             <div className="hidden md:flex items-center gap-2">
-                <Button variant={'default'} size={'sm'} asChild>
+                {user ? ( 
+                    <>
+                    <p className="text-sm font-medium">{user.name}</p>
+                    <form method="post" action={signout}>
+                        <Button variant={'default'} size={'sm'}>
+                            Sign Out 
+                        </Button>
+                    </form>
+                    </>
+                ) : ( 
+                    <Button variant={'default'} size={'sm'} asChild>
                     <Link href="/signin" prefetch={false}> 
                         Sign In 
                     </Link>
-                </Button>
+                    </Button>
+                )}
                 <ThemeToggle />
             </div>
             <div className="md:hidden flex w-full items-center justify-between gap-2">
@@ -63,11 +81,22 @@ export default function Navbar() {
                                     Contact
                                 </Link>
                             </nav>
-                            <Button variant={'default'} size={'sm'} asChild>
-                                <Link href="/signin" prefetch={false}> 
-                                    Sign In 
-                                </Link>
-                            </Button>
+                            {user ? (
+                                <>
+                                <Button variant="outline">{user.name}</Button>
+                                <form method="post" action={signout} className="w-full">
+                                    <Button variant={'default'} size={'sm'} className="w-full">
+                                        Sign Out 
+                                    </Button>
+                                </form>
+                                </>
+                            ) : (
+                                <Button variant={'default'} size={'sm'} asChild>
+                                    <Link href="/signin" prefetch={false}> 
+                                        Sign In 
+                                    </Link>
+                                </Button>
+                            )}
                         </div>
                     </SheetContent>
                 </Sheet>
