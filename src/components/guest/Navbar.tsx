@@ -11,8 +11,6 @@ export default async function Navbar() {
 
     const { user } = await validateRequest();
 
-
-
     return (
         <>
         <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 md:px-16">

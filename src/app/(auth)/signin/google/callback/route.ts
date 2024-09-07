@@ -1,4 +1,4 @@
-import { github, lucia } from "@/auth";
+import { google, lucia } from "@/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
@@ -12,30 +12,32 @@ export async function GET(request: Request): Promise<Response> {
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
 	const storedState = cookies().get("github_oauth_state")?.value ?? null;
-	if (!code || !state || !storedState || state !== storedState) {
+	const codeVerifier = cookies().get("code_verifier")?.value ?? null;
+	if (!code || !state || !storedState || !codeVerifier || state !== storedState) {
 		return new Response(null, {
 			status: 400
 		});
 	}
 
 	try {
-		const tokens = await github.validateAuthorizationCode(code);
-		const githubUserResponse = await fetch("https://api.github.com/user", {
-			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`
-			}
-		});
-		const githubUser: GitHubUser = await githubUserResponse.json();
+		const tokens = await google.validateAuthorizationCode(code,codeVerifier);
+		
+        const googleUserResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+            headers: {
+                Authorization: `Bearer ${tokens.accessToken}`
+            }
+        });
+		const googleUser: GoogleUser = await googleUserResponse.json();
 
-		const githubUserId = String(githubUser.id);
+		console.log(tokens.accessToken);
 
 		// Replace this with your own DB client.
 		const existingUser = await prisma.user.findFirst({ 
 			where: { 
 				accounts: {
 					some: {
-						provider: 'github',
-						providerId: githubUserId
+						provider: 'google',
+						providerId: googleUser.sub
 					}
 				}
 			},
@@ -56,14 +58,15 @@ export async function GET(request: Request): Promise<Response> {
 			});
 		}
 
+		console.log(googleUser);
         // create new user
         const newUser = await prisma.user.create({
             data: {
-                name: githubUser.login,
+                name: googleUser.sub, // user name
 				accounts: {
 					create : {
 						provider: 'github',
-						providerId: githubUserId
+						providerId: googleUser.sub
 					}
 				}
             },
@@ -115,7 +118,7 @@ export async function GET(request: Request): Promise<Response> {
 	}
 }
 
-interface GitHubUser {
-	id: string;
-	login: string;
+interface GoogleUser {
+	sub: string;
+	name: string;
 }
