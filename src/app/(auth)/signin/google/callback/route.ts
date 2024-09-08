@@ -29,8 +29,6 @@ export async function GET(request: Request): Promise<Response> {
         });
 		const googleUser: GoogleUser = await googleUserResponse.json();
 
-		console.log(tokens.accessToken);
-
 		// Replace this with your own DB client.
 		const existingUser = await prisma.user.findFirst({ 
 			where: { 
@@ -58,14 +56,15 @@ export async function GET(request: Request): Promise<Response> {
 			});
 		}
 
-		console.log(googleUser);
         // create new user
         const newUser = await prisma.user.create({
             data: {
-                name: googleUser.sub, // user name
+                name: googleUser.name,
+				email: googleUser.email,
+				emailVerified: new Date(),
 				accounts: {
 					create : {
-						provider: 'github',
+						provider: 'google',
 						providerId: googleUser.sub
 					}
 				}
@@ -121,4 +120,5 @@ export async function GET(request: Request): Promise<Response> {
 interface GoogleUser {
 	sub: string;
 	name: string;
+	email: string;
 }
