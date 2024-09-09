@@ -36,7 +36,7 @@ export default async function Navbar() {
                 {user ? ( 
                     <>
                     <p className="text-sm font-medium">{user.name}</p>
-                    <form method="post" action={signout}>
+                    <form action={signout}>
                         <Button variant={'default'} size={'sm'}>
                             Sign Out 
                         </Button>
@@ -82,7 +82,7 @@ export default async function Navbar() {
                             {user ? (
                                 <>
                                 <Button variant="outline">{user.name}</Button>
-                                <form method="post" action={signout} className="w-full">
+                                <form action={signout} className="w-full">
                                     <Button variant={'default'} size={'sm'} className="w-full">
                                         Sign Out 
                                     </Button>
