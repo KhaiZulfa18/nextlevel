@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
+import { signup } from "./action";
 
 export default function SignUpPage() {
 
@@ -14,27 +16,28 @@ export default function SignUpPage() {
                 <CardTitle>Create your account</CardTitle>
                 <CardDescription>
                     Already have an account?{" "}
-                    <Link href="/signup" className="font-medium text-primary hover:underline" prefetch={false}>
-                        Sign Up
+                    <Link href="/signin" className="font-medium text-primary hover:underline" prefetch={false}>
+                        Sign In
                     </Link>
                 </CardDescription>
             </CardHeader>
+            <form action={signup}>
             <CardContent className="grid gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="name">Your Name</Label>
-                    <Input id="name" type="name" placeholder="your name" required />
+                    <Input id="name" name="name" placeholder="your name" required />
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="me@nextlevel.com" required />
+                    <Input id="email" type="email" name="email" placeholder="me@nextlevel.com" required />
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="password">Password</Label>
-                    <Input id="password" type="password" placeholder="your password" required />
+                    <Input id="password" type="password" name="password" placeholder="your password" required />
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="confirm_password">Confirm Password</Label>
-                    <Input id="confirm_password" type="confirm_password" placeholder="password confirmation" required />
+                    <Input id="confirm_password" type="password" name="confirm_password" placeholder="password confirmation" required />
                 </div>
             </CardContent>
             <CardFooter className="grid gap-2">
@@ -57,6 +60,7 @@ export default function SignUpPage() {
                     </Link>
                 </Button>
             </CardFooter>
+            </form>
         </Card>
     );
 }
