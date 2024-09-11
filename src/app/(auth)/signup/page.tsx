@@ -4,11 +4,19 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
+import { IconBrandGithub, IconBrandGoogle, IconX } from "@tabler/icons-react";
 import Link from "next/link";
-import { signup } from "./action";
+import { createUser } from "./action";
+import { useFormState, useFormStatus } from "react-dom";
+import SubmitButton from "@/components/button/SubmitButton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function SignUpPage() {
+
+    const [state, formAction] = useFormState(createUser, {
+        status: '',
+        message: '',
+    });
 
     return (
         <Card className="p-2 md:p-6">
@@ -21,7 +29,7 @@ export default function SignUpPage() {
                     </Link>
                 </CardDescription>
             </CardHeader>
-            <form action={signup}>
+            <form action={formAction}>
             <CardContent className="grid gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="name">Your Name</Label>
@@ -39,9 +47,17 @@ export default function SignUpPage() {
                     <Label htmlFor="confirm_password">Confirm Password</Label>
                     <Input id="confirm_password" type="password" name="confirm_password" placeholder="password confirmation" required />
                 </div>
+                {state.message && 
+                    <Alert variant="destructive">
+                        <AlertTitle className="flex gap-2">
+                            <IconX size={16} /> Error
+                        </AlertTitle>
+                        <AlertDescription>{state.message}</AlertDescription>
+                    </Alert>
+                }
             </CardContent>
             <CardFooter className="grid gap-2">
-                <Button className="w-full">Sign Up</Button>
+                <SubmitButton text="Sign up" className="w-full"/>
                 <div className="flex items-center gap-4">
                     <Separator className="flex-1" />
                     <span className="text-primary">or</span>

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-export async function signup(formData: FormData): Promise<Response> {
+export async function createUser(prevState: FormData,formData: FormData): Promise<{ status: number, message: string }> {
     const rawFormData = {
         name: formData.get('name') as string,
         email: formData.get('email') as string,
@@ -12,18 +12,10 @@ export async function signup(formData: FormData): Promise<Response> {
 
     // Check if passwords match
     if (rawFormData.password !== rawFormData.confirmPassword) {
-        // return new Response(
-        //     JSON.stringify({ error: 'Passwords do not match' }), 
-        //     {
-        //         status: 400,
-        //         headers: { 'Content-Type': 'application/json' },
-        //     }
-        // );
-        revalidatePath('/signup?data'+JSON.stringify(rawFormData.name));
+        return { status: 400, message: 'Passwords do not match' };
     }
 
     // Handle signup logic (e.g., database operations) here
 
-    revalidatePath('/signup');
-    // return Response.redirect(new URL('/signin', location.origin));
+    return { status: 201, message: 'User created successfully' };
 }
