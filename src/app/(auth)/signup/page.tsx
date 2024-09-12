@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { IconBrandGithub, IconBrandGoogle, IconX } from "@tabler/icons-react";
+import { IconBrandGithub, IconBrandGoogle, IconCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import { createUser } from "./action";
 import { useFormState, useFormStatus } from "react-dom";
@@ -48,9 +48,10 @@ export default function SignUpPage() {
                     <Input id="confirm_password" type="password" name="confirm_password" placeholder="password confirmation" required />
                 </div>
                 {state.message && 
-                    <Alert variant="destructive">
-                        <AlertTitle className="flex gap-2">
-                            <IconX size={16} /> Error
+                    <Alert variant={ state.status === 201 ? 'success' : 'destructive'} className="">
+                        { state.status === 201 ? <IconCheck size={16} /> : <IconX size={16} /> }
+                        <AlertTitle >
+                            { state.status === 201 ? 'Success!' : 'Error!' }
                         </AlertTitle>
                         <AlertDescription>{state.message}</AlertDescription>
                     </Alert>
