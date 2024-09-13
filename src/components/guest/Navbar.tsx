@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { validateRequest } from "@/auth";
 import { signOut } from "@/lib/credential";
+import UserNav from "../user/UserNav";
 
 export default async function Navbar() {
 
@@ -33,14 +34,7 @@ export default async function Navbar() {
             </nav>
             <div className="hidden md:flex items-center gap-2">
                 {user ? ( 
-                    <>
-                    <p className="text-sm font-medium">{user.name}</p>
-                    <form action={signOut}>
-                        <Button variant={'default'} size={'sm'}>
-                            Sign Out 
-                        </Button>
-                    </form>
-                    </>
+                    <UserNav />                    
                 ) : ( 
                     <Button variant={'default'} size={'sm'} asChild>
                     <Link href="/signin" prefetch={false}> 
