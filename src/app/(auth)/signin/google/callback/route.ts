@@ -11,7 +11,7 @@ export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
-	const storedState = cookies().get("github_oauth_state")?.value ?? null;
+	const storedState = cookies().get("google_oauth_state")?.value ?? null;
 	const codeVerifier = cookies().get("code_verifier")?.value ?? null;
 	if (!code || !state || !storedState || !codeVerifier || state !== storedState) {
 		return new Response(null, {

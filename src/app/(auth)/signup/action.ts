@@ -1,10 +1,8 @@
 'use server';
 
 import { PrismaClient } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import bcrypt from 'bcryptjs';
-import { Redirect } from "next";
 import { lucia } from "@/auth";
 import { cookies } from "next/headers";
 import { RedirectType, redirect } from "next/navigation";
@@ -17,7 +15,7 @@ const userSchema = z.object({
     password: z.string().min(5, { message: 'Password must be at least 5 characters long' }),
     confirmPassword: z.string().min(1, { message: 'Confirm password is required' }),
 }).refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'Your password and confirmation don\'t match. Please try again.',
     path: ['confirmPassword'],
 });
 
@@ -42,7 +40,7 @@ export async function createUser(prevState: FormData,formData: FormData): Promis
     });
 
     if(existingUser) {
-        return { status: 400, message: 'User already exists' };
+        return { status: 400, message: 'This email address is already in use. Please try logging in or use a different email.' };
     }
 
     const hashedPassword = await bcrypt.hash(rawFormData.password, 10);
@@ -59,6 +57,6 @@ export async function createUser(prevState: FormData,formData: FormData): Promis
     const sessionCookie = lucia.createSessionCookie(session.id);
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-    redirect('/', RedirectType.replace);
+    redirect('/', RedirectType.push);
     // return { status: 201, message: 'User created successfully' };
 }
