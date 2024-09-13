@@ -10,14 +10,6 @@ export async function GET(): Promise<Response> {
         scopes: ["profile", "email"],
     });
 
-	cookies().set("github_oauth_state", state, {
-		path: "/",
-		secure: process.env.NODE_ENV === "production",
-		httpOnly: true,
-		maxAge: 60 * 10,
-		sameSite: "lax"
-	});
-
     // Set the 'google_oauth_state' cookie
     cookies().set("google_oauth_state", state, {
         path: "/",
