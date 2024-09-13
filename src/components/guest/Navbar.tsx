@@ -4,8 +4,7 @@ import { IconMenu2, IconMountain } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { validateRequest } from "@/auth";
-import { signout } from "@/lib/signout";
-import { Badge } from "../ui/badge";
+import { signOut } from "@/lib/credential";
 
 export default async function Navbar() {
 
@@ -36,7 +35,7 @@ export default async function Navbar() {
                 {user ? ( 
                     <>
                     <p className="text-sm font-medium">{user.name}</p>
-                    <form action={signout}>
+                    <form action={signOut}>
                         <Button variant={'default'} size={'sm'}>
                             Sign Out 
                         </Button>
@@ -82,7 +81,7 @@ export default async function Navbar() {
                             {user ? (
                                 <>
                                 <Button variant="outline">{user.name}</Button>
-                                <form action={signout} className="w-full">
+                                <form action={signOut} className="w-full">
                                     <Button variant={'default'} size={'sm'} className="w-full">
                                         Sign Out 
                                     </Button>
