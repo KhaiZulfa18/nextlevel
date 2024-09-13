@@ -1,11 +1,7 @@
 import { github, lucia } from "@/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
-import { generateIdFromEntropySize } from "lucia";
-import { PrismaClient } from "@prisma/client";
-import { create } from "domain";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);

@@ -6,8 +6,7 @@ import bcrypt from 'bcryptjs';
 import { lucia, validateRequest } from "@/auth";
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function signIn(prevState: FormData, formData: FormData): Promise<ActionResult> {
     

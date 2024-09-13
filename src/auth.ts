@@ -5,8 +5,7 @@ import { GitHub, Google } from "arctic";
 import { cookies } from "next/headers";
 import { cache } from "react";
 import type { Session, User } from "lucia";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 const adapter = new PrismaAdapter(prisma.session, prisma.user);
 
