@@ -3,6 +3,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Button } from "../ui/button";
 import { signOut } from "@/lib/credential";
 import { IconLogout } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default async function UserNav() {
  
@@ -18,9 +19,8 @@ export default async function UserNav() {
             <DropdownMenuContent className="w-56 mt-1">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/profile">Profile</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/dashboard">Dashboard</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                     <form action={signOut}>
