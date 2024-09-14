@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "@/lib/credential";
-import SubmitButton from "@/components/button/SubmitButton";
+import SubmitButton from "@/components/form/SubmitButton";
 import { useFormState, useFormStatus } from "react-dom";
 import { IconBrandGithub, IconBrandGoogle, IconCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";

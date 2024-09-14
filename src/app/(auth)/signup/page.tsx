@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { IconBrandGithub, IconBrandGoogle, IconCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
-import SubmitButton from "@/components/button/SubmitButton";
+import SubmitButton from "@/components/form/SubmitButton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { signUp } from "@/lib/credential";
 
