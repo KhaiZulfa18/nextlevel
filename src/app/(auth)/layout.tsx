@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IconBrandGithub, IconBrandGoogle, IconMountain } from "@tabler/icons-react";
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
+import ThemeToggle from "@/components/theme/theme-toggle";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
 

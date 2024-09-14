@@ -1,11 +1,12 @@
 import Link from "next/link";
-import ThemeToggle from "../ThemeToggle";
+import ThemeToggle from "../theme/theme-toggle";
 import { IconMenu2, IconMountain } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { validateRequest } from "@/auth";
 import { signOut } from "@/lib/credential";
-import UserNav from "../user/UserNav";
+import UserNav from "../layout/user-nav";
+
 
 export default async function Navbar() {
 
@@ -18,6 +19,18 @@ export default async function Navbar() {
                 <Link href="/" className="flex items-center gap-2 mr-8" prefetch={false}>
                     <IconMountain size={24} />
                     <span className="text-lg font-mono">NextLevel</span>
+                </Link>
+                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
+                Features
+                </Link>
+                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
+                Pricing
+                </Link>
+                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
+                About
+                </Link>
+                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
+                Contact
                 </Link>
             </nav>
             <div className="hidden md:flex items-center gap-2">

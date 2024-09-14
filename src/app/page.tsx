@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
-import Navbar from "@/components/guest/Navbar";
+import Navbar from "@/components/layout/navbar";
 
 export default function Home() {
 

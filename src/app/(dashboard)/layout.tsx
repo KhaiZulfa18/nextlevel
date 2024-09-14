@@ -1,5 +1,5 @@
 import { validateRequest } from "@/auth";
-import Navbar from "@/components/dashboard/Navbar";
+import Navbar from "@/components/layout/navbar";
 import { redirect } from "next/navigation";
 import React from "react";
 
