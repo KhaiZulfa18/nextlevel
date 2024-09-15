@@ -1,4 +1,4 @@
-import ContentLayout from "@/components/layout/content-layoout";
+import ContentLayout from "@/components/layout/content-layout";
 
 export default function Dashboard({}) {
 
