@@ -23,12 +23,12 @@ export default function Sidebar({}) {
             )}
             >
             <SidebarToggle isOpen={sidebar?.isOpen} setIsOpen={sidebar?.setIsOpen} />
-            <div className="relative h-full flex flex-col px-3  overflow-y-auto shadow-md dark:shadow-zinc-800">
+            <div className="relative h-full flex flex-col px-4 overflow-y-auto shadow-md dark:shadow-zinc-800">
                 <div className="px-4 h-14 border-b flex items-center space-x-2 justify-center">
                     <IconMountain size={24}/>
                     {sidebar?.isOpen && <span className="font-mono">NextLevel</span> }
                 </div>
-                <nav className="flex-1 overflow-y-auto p-4">
+                <nav className="flex-1 overflow-y-auto py-4">
                     {menuItems.map((item, index) => (
                         <MenuItems key={index} item={item} isSidebarOpen={sidebar?.isOpen} />
                     ))}
