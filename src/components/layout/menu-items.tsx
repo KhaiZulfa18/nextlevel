@@ -9,27 +9,37 @@ export default function MenuItems({item}: {item: any}) {
     const hasChildren = item.children && item.children.length > 0;
 
     return (
-        // <div className="hidden md:flex items-center gap-2">
-        //     {items.map((item: any) => (
-        //         <Link key={item.name} href={item.href} className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
-        //             {item.name}
-        //         </Link>
-        //     ))}
-        // </div>
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <CollapsibleTrigger className="flex items-center w-full p-2 hover:bg-accent rounded-md">
+            <CollapsibleTrigger className="flex items-center w-full p-2 text-sm hover:bg-accent rounded-md justify-between">
                 {hasChildren ? (
-                    isOpen ? <IconChevronDown size={16} /> : <IconChevronRight className="h-4 w-4 mr-2" />
+                    <>
+                        {item.label}
+                        {isOpen ? <IconChevronDown size={16} /> : <IconChevronRight size={16}/>}
+                    </>
                 ) : (
-                    <IconBook size={16}/>
+                    <Link href={item.path} prefetch={false} className="flex w-full justify-between">
+                        {item.label}
+                        <IconBook size={16}/>
+                    </Link>
                 )}
-                {item.label}
             </CollapsibleTrigger>
             {hasChildren && (
-                <CollapsibleContent className="ml-4">
-                    {item.label}
+                <CollapsibleContent className="border-l pl-4" asChild>
+                    <div className="flex flex-col">
+                        {item.children.map((child: any, index: number) => (
+                            <MenuItemList key={index} item={child} index={index}/>
+                        ))}
+                    </div>
                 </CollapsibleContent>
             )}
         </Collapsible>
+    )
+}
+
+const MenuItemList = ({item, index}: {item: any, index: number}) => {
+    return (
+        <CollapsibleContent key={index} className="flex items-center w-full p-2 text-sm hover:bg-accent justify-between rounded-md" asChild>
+            <Link key={index} href={item.path} prefetch={false} className="">{item.label}</Link>
+        </CollapsibleContent>
     )
 }
