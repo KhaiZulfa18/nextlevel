@@ -1,8 +1,10 @@
+import ContentLayout from "@/components/layout/content-layoout";
+
 export default function Dashboard({}) {
 
     return (
-        <div>
-            {/* Dashboard */}
-        </div>
+        <ContentLayout>
+            <h1>Dashboard</h1>
+        </ContentLayout>
     )
 }

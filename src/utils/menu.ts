@@ -8,12 +8,12 @@ export interface MenuItem {
 export const menuItems: MenuItem[] = [
     {
         label: 'Dashboard',
-        icon: 'dashboard-icon',
+        icon: 'IconDashboard',
         path: '/dashboard',
     },
     {
         label: 'Users',
-        icon: 'users-icon',
+        icon: 'IconUsers',
         path: '/users',
     },
     {
