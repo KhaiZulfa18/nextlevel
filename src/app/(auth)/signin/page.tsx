@@ -58,13 +58,13 @@ export default function SignInPage() {
                     <Separator className="flex-1" />
                 </div>
                 <Button variant="outline" className="flex place-items-center gap-2 border-gray-500" asChild>
-                    <Link href="/signin/google" prefetch={false}>
+                    <Link href="/signin/google" prefetch={true}>
                         <IconBrandGoogle size={16} />
                         Sign in with Google
                     </Link>
                 </Button>
                 <Button variant="outline" className="flex place-items-center gap-2 border-gray-500" asChild>
-                    <Link href="/signin/github" prefetch={false}>
+                    <Link href="/signin/github" prefetch={true}>
                         <IconBrandGithub size={16} />
                         Sign in with GitHub
                     </Link>

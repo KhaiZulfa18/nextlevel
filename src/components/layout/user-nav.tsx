@@ -24,7 +24,7 @@ export default async function UserNav() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                     <form action={signOut}>
-                        <Button variant={'ghost'} size={'xs'} className="flex justify-between gap-1 font-normal h-auto">
+                        <Button variant={'ghost'} size={'xs'} className="flex w-full justify-start gap-1 font-normal h-auto">
                             <IconLogout size={20} />
                             <span>Sign Out</span>
                         </Button>

@@ -28,7 +28,7 @@ export default function Sidebar({}) {
                     <IconMountain size={24}/>
                     {sidebar?.isOpen && <span className="font-mono">NextLevel</span> }
                 </div>
-                <nav className="flex-1 overflow-y-auto py-4">
+                <nav className="flex-1 overflow-y-auto py-4 px-1">
                     {menuItems.map((item, index) => (
                         <MenuItems key={index} item={item} isSidebarOpen={sidebar?.isOpen} />
                     ))}
