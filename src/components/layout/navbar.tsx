@@ -20,18 +20,6 @@ export default async function Navbar() {
                     <IconMountain size={24} />
                     <span className="text-lg font-mono">NextLevel</span>
                 </Link>
-                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
-                Features
-                </Link>
-                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
-                Pricing
-                </Link>
-                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
-                About
-                </Link>
-                <Link href="#" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
-                Contact
-                </Link>
             </nav>
             <div className="hidden md:flex items-center gap-2">
                 {user ? ( 
