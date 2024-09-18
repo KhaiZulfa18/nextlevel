@@ -55,7 +55,8 @@ export async function GET(request: Request): Promise<Response> {
         // create new user
         const newUser = await prisma.user.create({
             data: {
-                name: githubUser.login,
+                name: githubUser.name,
+				username: githubUser.login,
 				accounts: {
 					create : {
 						provider: 'github',
@@ -114,4 +115,5 @@ export async function GET(request: Request): Promise<Response> {
 interface GitHubUser {
 	id: string;
 	login: string;
+	name: string;
 }

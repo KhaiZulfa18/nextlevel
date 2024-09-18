@@ -56,6 +56,7 @@ export async function GET(request: Request): Promise<Response> {
         const newUser = await prisma.user.create({
             data: {
                 name: googleUser.name,
+				username: createUsername(googleUser.name),
 				email: googleUser.email,
 				emailVerified: new Date(),
 				accounts: {
@@ -111,6 +112,16 @@ export async function GET(request: Request): Promise<Response> {
 			}
 		);
 	}
+}
+
+export function createUsername(name: string) {
+    // Convert to lowercase
+    let username = name.toLowerCase();
+    // Replace spaces with underscores
+    username = username.replace(/\s+/g, '_');
+    // Optionally, remove other unwanted characters
+    username = username.replace(/[^a-z0-9_]/g, '');
+    return username;
 }
 
 interface GoogleUser {
