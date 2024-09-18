@@ -21,8 +21,8 @@ export default function DashboardLayout({children}: Props) {
             <Sidebar/>
             <main
                 className={clsx(
-                "min-h-[calc(100vh_-_56px)] bg-zinc-50 dark:bg-slate-500 transition-[margin-left] ease-in-out duration-300",
-                    sidebar.isOpen === false ? "lg:ml-[112px]" : "lg:ml-64"
+                "min-h-[calc(100vh_-_56px)] bg-zinc-50 dark:bg-slate-600 transition-[margin-left] ease-in-out duration-300",
+                    sidebar.isOpen === false ? "lg:ml-[112px]" : "md:ml-64"
                 )}
             >   
                 {children}

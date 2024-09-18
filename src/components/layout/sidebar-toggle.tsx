@@ -9,7 +9,7 @@ interface Props {
 export default function SidebarToggle({isOpen, setIsOpen}: Props) {
 
     return (
-        <div className="invisible lg:visible absolute top-[12px] -right-[16px] z-20">
+        <div className="invisible md:visible absolute top-[12px] -right-[16px] z-20">
             <Button
                 onClick={() => setIsOpen(!isOpen)}
                 className="rounded-md w-8 h-8"
