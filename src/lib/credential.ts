@@ -62,9 +62,12 @@ export async function signUp(prevState: FormData, formData: FormData): Promise<A
 
     const hashedPassword = await bcrypt.hash(rawFormData.password, 10);
 
+    const username = await createUsername(rawFormData.name);
+
     const user = await prisma.user.create({
         data: {
             name: rawFormData.name,
+            username: username,
             email: rawFormData.email,
             password: hashedPassword,
         },
@@ -92,6 +95,29 @@ export async function signOut(): Promise<ActionResult> {
 	const sessionCookie = lucia.createBlankSessionCookie();
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	return redirect("/signin");
+}
+
+export async function createUsername(name: string) {
+    let username = name.toLowerCase();
+    username = username.replace(/\s+/g, '');
+    username = username.replace(/[^a-z0-9_]/g, '');
+
+    let existingUser = await prisma.user.findFirst({
+        where: { username },
+    });
+
+    const baseUsername = username;
+
+    while (existingUser) {
+        const randomNumber = Math.floor(1000 + Math.random() * 9000);
+        username = `${baseUsername}${randomNumber}`;
+        
+        existingUser = await prisma.user.findFirst({
+            where: { username },
+        });
+    }
+
+    return username;
 }
 
 const userSchema = z.object({

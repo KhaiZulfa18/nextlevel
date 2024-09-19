@@ -2,6 +2,7 @@ import { google, lucia } from "@/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import prisma from "@/lib/prisma";
+import { createUsername } from "@/lib/credential";
 
 export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);
@@ -52,11 +53,13 @@ export async function GET(request: Request): Promise<Response> {
 			});
 		}
 
+		const username = await createUsername(googleUser.name);
+
         // create new user
         const newUser = await prisma.user.create({
             data: {
                 name: googleUser.name,
-				username: createUsername(googleUser.name),
+				username: username,
 				email: googleUser.email,
 				emailVerified: new Date(),
 				accounts: {
@@ -112,16 +115,6 @@ export async function GET(request: Request): Promise<Response> {
 			}
 		);
 	}
-}
-
-export function createUsername(name: string) {
-    // Convert to lowercase
-    let username = name.toLowerCase();
-    // Replace spaces with underscores
-    username = username.replace(/\s+/g, '_');
-    // Optionally, remove other unwanted characters
-    username = username.replace(/[^a-z0-9_]/g, '');
-    return username;
 }
 
 interface GoogleUser {
