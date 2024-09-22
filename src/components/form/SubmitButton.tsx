@@ -1,3 +1,4 @@
+"use client";
 import { useFormStatus } from "react-dom";
 import { Button } from "../ui/button";
 import { IconLoader2 } from "@tabler/icons-react";
