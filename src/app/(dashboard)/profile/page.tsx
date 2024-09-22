@@ -5,14 +5,17 @@ import { Card, CardTitle, CardHeader, CardDescription, CardContent, CardFooter }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
+import { getUserProfile } from "./action";
+import { useQuery } from "@tanstack/react-query";
 
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+export default async function Profile() {
 
-export default async function Profile({}) {
+    const data = await getUserProfile();
 
-    await sleep(2000); // Sleep for 2 seconds
+    // // const { data } = useQuery({
+    // //     queryKey: ["user-profile"],
+    // //     queryFn: () => getUserProfile(),
+    // // })
 
     return (
         <ContentLayout>
@@ -23,17 +26,13 @@ export default async function Profile({}) {
                         <CardDescription>Make changes to your profile here. Click save when you're done.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                            <Label htmlFor="username">Name</Label>
+                            <Input id="username" placeholder="Username" defaultValue={data?.username} />
+                        </div>
                         <div className="space-y-2">
                             <Label htmlFor="name">Name</Label>
-                            <Input id="name" placeholder="John Doe" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="bio">Bio</Label>
-                            <Input id="bio" placeholder="Tell us about yourself" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="website">Website</Label>
-                            <Input id="website" type="url" placeholder="https://example.com" />
+                            <Input id="name" placeholder="Your Name" defaultValue={data?.name} />
                         </div>
                     </CardContent>
                     <CardFooter>
@@ -48,20 +47,30 @@ export default async function Profile({}) {
                     <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input id="email" type="email" placeholder="Email" />
+                            <Input id="email" type="email" placeholder="Email" defaultValue={data?.email} />
                         </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="current_password">Current Password</Label>
-                            <Input id="current_password" type="password" placeholder="Current Password" autoComplete="off" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="new_password">New Password</Label>
-                            <Input id="new_password" type="password" placeholder="New Password" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="confirm_new_password">Confirm New Password</Label>
-                            <Input id="confirm_new_password" type="password" placeholder="Confirm New Password" />
-                        </div>
+                        {data?.password ? (
+                            <>
+                            <div className="space-y-2">
+                                <Label htmlFor="current_password">Current Password</Label>
+                                <Input id="current_password" type="password" placeholder="Current Password" autoComplete="off" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="new_password">New Password</Label>
+                                <Input id="new_password" type="password" placeholder="New Password" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="confirm_new_password">Confirm New Password</Label>
+                                <Input id="confirm_new_password" type="password" placeholder="Confirm New Password" />
+                            </div>
+                            </>
+                        ) : (
+                            <div className="space-y-2">
+                                <Label htmlFor="password">Set Password</Label>
+                                <Input id="password" type="password" placeholder="Password" />
+                                <span className="text-gray-500 text-sm">You can set a password for this account to use email and password login in the future.</span>
+                            </div>
+                        )}
                     </CardContent>
                     <CardFooter>
                         <Button>Save New Password</Button>
@@ -75,11 +84,11 @@ export default async function Profile({}) {
                     </CardHeader>
                     <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex gap-4" >
-                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300">
-                                <IconBrandGithub size={20} /> Connect GitHub
+                            <Button variant={'outline'} className={`gap-2 px-6 border ${data?.isGithubConnected ? 'border-green-500 dark:border-green-500' : 'border-gray-800 dark:border-gray-300'}`}>
+                                <IconBrandGithub size={20} /> {data?.isGithubConnected ? 'Connected' : 'Connect'} GitHub
                             </Button>
-                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300">
-                                <IconBrandGoogle size={20} /> Connect Google
+                            <Button variant={'outline'} className={`gap-2 px-6 border ${data?.isGoogleConnected ? 'border-green-500 dark:border-green-500' : 'border-gray-800 dark:border-gray-300'}`}>
+                                <IconBrandGoogle size={20} /> {data?.isGoogleConnected ? 'Connected' : 'Connect'} Google
                             </Button>
                         </div>
                     </CardContent>
