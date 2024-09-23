@@ -6,7 +6,9 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import SubmitButton from "@/components/form/SubmitButton";
 import { useFormState } from "react-dom";
 import { updatePassword } from "./action";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconCheck, IconExclamationCircle, IconX } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function UpdatePassword({user} : {user: any}) {
 
@@ -28,6 +30,13 @@ export default function UpdatePassword({user} : {user: any}) {
                     <Input name="email" type="email" placeholder="Email" defaultValue={user?.email || ''} autoComplete="nope"/>
                     {!user.email && (
                         <span className="text-gray-500 text-sm">No email detected. Please enter your email to use email and password login.</span>
+                    )}
+                    {(user.email && !user.email_verified) && (
+                        <span className="text-gray-500 text-sm flex items-center space-x-1">
+                            <IconExclamationCircle size={16} />
+                            <span>We noticed your email isn't verified.</span>
+                            <Link href="/verify-email" className="text-blue-500 hover:text-blue-600 underline transition-colors duration-200 font-medium">Click here to verify it!</Link>
+                        </span>
                     )}
                 </div>
                 {user?.password ? (
