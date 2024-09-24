@@ -3,7 +3,7 @@ import { Card, CardTitle, CardHeader, CardDescription, CardContent, CardFooter }
 import { useFormState } from "react-dom";
 import { updateProfile } from "./action";
 import { Button } from "@/components/ui/button";
-import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
+import { IconBrandGithub, IconBrandGoogle, IconX } from "@tabler/icons-react";
 
 export default function UpdateAccount({user} : {user: any}) {
 
@@ -19,13 +19,41 @@ export default function UpdateAccount({user} : {user: any}) {
                 <CardDescription>Manage your account providers.</CardDescription>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex gap-4" >
-                    <Button variant={'outline'} className={`gap-2 px-6 border ${user?.isGithubConnected ? 'border-green-500 dark:border-green-500' : 'border-gray-800 dark:border-gray-300'}`}>
-                        <IconBrandGithub size={20} /> {user?.isGithubConnected ? 'Connected' : 'Connect'} GitHub
-                    </Button>
-                    <Button variant={'outline'} className={`gap-2 px-6 border ${user?.isGoogleConnected ? 'border-green-500 dark:border-green-500' : 'border-gray-800 dark:border-gray-300'}`}>
-                        <IconBrandGoogle size={20} /> {user?.isGoogleConnected ? 'Connected' : 'Connect'} Google
-                    </Button>
+                <div className="flex gap-4 flex-wrap" >
+                    <div className="relative inline-block">
+                        {user?.isGithubConnected ? (
+                            <>
+                            <Button variant="outline" className="gap-2 px-6 border border-green-500 dark:border-green-500 font-semibold text-green-700 dark:text-green-400 shadow-md hover:bg-green-50 dark:hover:bg-green-950 hover:text-green-800 dark:hover:text-green-300 hover:border-green-600  dark:hover:border-green-300 transition-all duration-300 ease-in-out">
+                                <IconBrandGithub size={20} /> Connected Github
+                            </Button>
+                            <Button variant="outline" className="absolute -top-2 -right-2 w-6 h-6 p-0 rounded-full border-2 border-red-500 text-red-500 hover:bg-red-100 dark:hover:bg-red-900 dark:hover:text-red-400 hover:text-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                aria-label="Disconnect GitHub">
+                                <IconX size={14} />
+                            </Button>
+                            </>
+                        ) : (
+                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300">
+                                <IconBrandGithub size={20} /> Connect to Github
+                            </Button>
+                        ) }
+                    </div>
+                    <div className="relative inline-block">
+                        {user?.isGoogleConnected ? (
+                            <>
+                            <Button variant="outline" className="gap-2 px-6 border border-green-500 dark:border-green-500 font-semibold text-green-700 dark:text-green-400 shadow-md hover:bg-green-50 dark:hover:bg-green-950 hover:text-green-800 dark:hover:text-green-300 hover:border-green-600  dark:hover:border-green-300 transition-all duration-300 ease-in-out">
+                                <IconBrandGoogle size={20} /> Connected Google
+                            </Button>
+                            <Button variant="outline" className="absolute -top-2 -right-2 w-6 h-6 p-0 rounded-full border-2 border-red-500 text-red-500 hover:bg-red-100 dark:hover:bg-red-900 dark:hover:text-red-400 hover:text-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                aria-label="Disconnect GitHub">
+                                <IconX size={14} />
+                            </Button>
+                            </>
+                        ) : (
+                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300">
+                                <IconBrandGoogle size={20} /> Connect to Google
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </CardContent>
         </Card>
