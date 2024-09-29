@@ -7,7 +7,9 @@ export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
+	const action = url.searchParams.get("action");
 	const storedState = cookies().get("github_oauth_state")?.value ?? null;
+	const currentSessionCookie = cookies().get(lucia.sessionCookieName)?.value ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
 		return new Response(null, {
 			status: 400
@@ -25,7 +27,50 @@ export async function GET(request: Request): Promise<Response> {
 
 		const githubUserId = String(githubUser.id);
 
-		// Replace this with your own DB client.
+		let currentUser = null;
+
+		if (currentSessionCookie) {
+			const { user } = await lucia.validateSession(currentSessionCookie);
+			currentUser = user;
+		}
+		
+		if (action === 'connect') {
+
+			const existingAccount = await prisma.account.findFirst({
+				where: {
+					provider: 'github',
+					providerId: githubUserId
+				}
+			});
+
+			if (existingAccount) {
+				return new Response(JSON.stringify({ error: "GitHub account is already linked to another user." }), {
+					status: 400,
+					headers: { 'Content-Type': 'application/json' }
+				});
+			}
+
+			if (!currentUser) {
+				return new Response(null, {
+					status: 400,
+					headers: { Location: "/signin" }
+				});
+			}
+
+			await prisma.account.create({
+				data: {
+					provider: 'github',
+					providerId: githubUserId,
+					userId: currentUser.id
+				}
+			});
+
+			return new Response(null, {
+				status: 302,
+				headers: { Location: "/profile" }
+			});
+		}
+
 		const existingUser = await prisma.user.findFirst({ 
 			where: { 
 				accounts: {

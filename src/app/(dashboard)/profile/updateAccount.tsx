@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import { updateProfile } from "./action";
 import { Button } from "@/components/ui/button";
 import { IconBrandGithub, IconBrandGoogle, IconX } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default function UpdateAccount({user} : {user: any}) {
 
@@ -32,8 +33,10 @@ export default function UpdateAccount({user} : {user: any}) {
                             </Button>
                             </>
                         ) : (
-                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300">
-                                <IconBrandGithub size={20} /> Connect to Github
+                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300" asChild>
+                                <Link href="/signin/github?action=connect" prefetch={false}>
+                                    <IconBrandGithub size={20} /> Connect to Github
+                                </Link>
                             </Button>
                         ) }
                     </div>
