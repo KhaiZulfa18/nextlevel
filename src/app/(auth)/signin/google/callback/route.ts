@@ -8,8 +8,10 @@ export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
+	const action = url.searchParams.get("action");
 	const storedState = cookies().get("google_oauth_state")?.value ?? null;
 	const codeVerifier = cookies().get("code_verifier")?.value ?? null;
+	const currentSessionCookie = cookies().get(lucia.sessionCookieName)?.value ?? null;
 	if (!code || !state || !storedState || !codeVerifier || state !== storedState) {
 		return new Response(null, {
 			status: 400
@@ -25,14 +27,62 @@ export async function GET(request: Request): Promise<Response> {
             }
         });
 		const googleUser: GoogleUser = await googleUserResponse.json();
+		const googleUserId = googleUser.sub;
 
-		// Replace this with your own DB client.
+		let currentUser = null;
+
+		if (currentSessionCookie) {
+			const { user } = await lucia.validateSession(currentSessionCookie);
+			currentUser = user;
+		}
+		
+		console.log(action);
+		// return new Response(action, {
+		// 	status: 400,
+		// });
+		if (action === 'connect') {
+
+			const existingAccount = await prisma.account.findFirst({
+				where: {
+					provider: 'google',
+					providerId: googleUserId
+				}
+			});
+
+			if (existingAccount) {
+				return new Response(JSON.stringify({ error: "Google account is already linked to another user." }), {
+					status: 400,
+					headers: { 'Content-Type': 'application/json' }
+				});
+			}
+
+			if (!currentUser) {
+				return new Response(null, {
+					status: 400,
+					headers: { Location: "/signin" }
+				});
+			}
+
+			await prisma.account.create({
+				data: {
+					provider: 'google',
+					providerId: googleUserId,
+					userId: currentUser.id
+				}
+			});
+
+			return new Response(null, {
+				status: 302,
+				headers: { Location: "/profile" }
+			});
+		}
+
 		const existingUser = await prisma.user.findFirst({ 
 			where: { 
 				accounts: {
 					some: {
 						provider: 'google',
-						providerId: googleUser.sub
+						providerId: googleUserId
 					}
 				}
 			},
@@ -65,7 +115,7 @@ export async function GET(request: Request): Promise<Response> {
 				accounts: {
 					create : {
 						provider: 'google',
-						providerId: googleUser.sub
+						providerId: googleUserId
 					}
 				}
             },

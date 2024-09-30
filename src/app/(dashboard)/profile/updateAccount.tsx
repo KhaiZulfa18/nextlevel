@@ -52,8 +52,10 @@ export default function UpdateAccount({user} : {user: any}) {
                             </Button>
                             </>
                         ) : (
-                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300">
-                                <IconBrandGoogle size={20} /> Connect to Google
+                            <Button variant={'outline'} className="gap-2 px-6 border border-gray-800 dark:border-gray-300" asChild>
+                                <Link href="/signin/google?action=connect" prefetch={false}>
+                                    <IconBrandGoogle size={20} /> Connect to Google
+                                </Link>
                             </Button>
                         )}
                     </div>
