@@ -15,7 +15,7 @@ export async function GET(request: Request): Promise<Response> {
     });
 
     const redirectUri = action === "connect"
-		? `${process.env.HOST_NAME}/signin/google/callback?action=connect`
+		? `${process.env.HOST_NAME}/signin/google/connect/callback`
 		: `${process.env.HOST_NAME}/signin/google/callback`;
 
     const redirectUrl = new URL(authorizationUrl);
