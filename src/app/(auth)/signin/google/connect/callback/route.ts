@@ -36,7 +36,7 @@ export async function GET(request: Request): Promise<Response> {
 			currentUser = user;
 		}
 		
-		console.log(action);
+		// console.log(action);
 		// return new Response(action, {
 		// 	status: 400,
 		// });

@@ -21,7 +21,7 @@ export async function GET(request: Request): Promise<Response> {
     const redirectUrl = new URL(authorizationUrl);
     redirectUrl.searchParams.set("redirect_uri", redirectUri.toString());
 
-    console.log(redirectUrl);
+    // console.log(redirectUrl);
 
     // Set the 'google_oauth_state' cookie
     cookies().set("google_oauth_state", state, {
