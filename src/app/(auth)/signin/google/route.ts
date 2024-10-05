@@ -10,18 +10,13 @@ export async function GET(request: Request): Promise<Response> {
 	const state = generateState();
     const codeVerifier = generateCodeVerifier();
 
-	const authorizationUrl = await google.createAuthorizationURL(state,codeVerifier, {
-        scopes: ["profile", "email"],
-    });
-
     const redirectUri = action === "connect"
 		? `${process.env.HOST_NAME}/signin/google/connect/callback`
 		: `${process.env.HOST_NAME}/signin/google/callback`;
 
-    const redirectUrl = new URL(authorizationUrl);
-    redirectUrl.searchParams.set("redirect_uri", redirectUri.toString());
-
-    // console.log(redirectUrl);
+	const authorizationUrl = await google(redirectUri).createAuthorizationURL(state,codeVerifier, {
+        scopes: ["profile", "email"],
+    });
 
     // Set the 'google_oauth_state' cookie
     cookies().set("google_oauth_state", state, {
@@ -41,5 +36,5 @@ export async function GET(request: Request): Promise<Response> {
         sameSite: "lax"
     });
 
-	return Response.redirect(redirectUrl);
+	return Response.redirect(authorizationUrl);
 }

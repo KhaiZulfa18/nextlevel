@@ -19,7 +19,7 @@ export async function GET(request: Request): Promise<Response> {
 	}
 
 	try {
-		const tokens = await google.validateAuthorizationCode(code,codeVerifier);
+		const tokens = await google().validateAuthorizationCode(code,codeVerifier);
 		
         const googleUserResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
             headers: {

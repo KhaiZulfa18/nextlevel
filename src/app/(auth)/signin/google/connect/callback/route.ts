@@ -19,7 +19,7 @@ export async function GET(request: Request): Promise<Response> {
 	}
 
 	try {
-		const tokens = await google.validateAuthorizationCode(code,codeVerifier);
+		const tokens = await google(`${process.env.HOST_NAME}/signin/google/connect/callback`).validateAuthorizationCode(code,codeVerifier);
 		
         const googleUserResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
             headers: {
@@ -36,10 +36,6 @@ export async function GET(request: Request): Promise<Response> {
 			currentUser = user;
 		}
 		
-		// console.log(action);
-		// return new Response(action, {
-		// 	status: 400,
-		// });
 		if (action === 'connect') {
 
 			const existingAccount = await prisma.account.findFirst({
