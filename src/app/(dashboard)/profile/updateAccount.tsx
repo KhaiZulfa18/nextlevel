@@ -17,8 +17,8 @@ type MessageState = {
 
 export default function UpdateAccount({user} : {user: any}) {
     
-    const [openModal, setOpenModal] = useState<Boolean>(false);
-    const [provider, setProvider] = useState<String>('');
+    const [openModal, setOpenModal] = useState(false);
+    const [provider, setProvider] = useState('');
     const [message, setMessage] = useState<MessageState>({
         status: null,
         message: null,
