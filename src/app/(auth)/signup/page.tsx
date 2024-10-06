@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { IconBrandGithub, IconBrandGoogle, IconCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import SubmitButton from "@/components/form/SubmitButton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { signUp } from "@/lib/credential";
@@ -15,8 +15,8 @@ import { signUp } from "@/lib/credential";
 export default function SignUpPage() {
 
     const [state, formAction] = useFormState(signUp, {
-        status: '',
-        message: '',
+        status: null,
+        message: null,
     });
 
     return (

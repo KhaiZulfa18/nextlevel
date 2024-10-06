@@ -7,14 +7,13 @@ import SubmitButton from "@/components/form/SubmitButton";
 import { useFormState } from "react-dom";
 import { updatePassword } from "./action";
 import { IconCheck, IconExclamationCircle, IconX } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function UpdatePassword({user} : {user: any}) {
 
     const [state, formAction] = useFormState(updatePassword, {
-        status: '',
-        message: '',
+        status: null,
+        message: null,
     });
 
     return (

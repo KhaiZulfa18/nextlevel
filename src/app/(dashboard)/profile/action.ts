@@ -23,7 +23,7 @@ export async function getUserProfile() {
     return {...userProfile, isGithubConnected, isGoogleConnected};
 }
 
-export async function updateProfile(prevState: FormData,formData: FormData): Promise<ActionResult> {
+export async function updateProfile(prevState: ActionResult,formData: FormData): Promise<ActionResult> {
 
     const { user } = await validateRequest();
     const userId = user?.id
@@ -58,7 +58,7 @@ export async function updateProfile(prevState: FormData,formData: FormData): Pro
     return { status: 201, message: 'Profile updated successfully.' };
 }
 
-export async function updatePassword(prevState: FormData,formData: FormData): Promise<ActionResult> {
+export async function updatePassword(prevState: ActionResult,formData: FormData): Promise<ActionResult> {
 
     const { user } = await validateRequest();
     const userId = user?.id
@@ -186,7 +186,7 @@ const userSchema = z.object({
 });
 
 interface ActionResult {
-    status: number;
+    status: number | null;
 	error?: string | null;
     message?: string | null;
 }

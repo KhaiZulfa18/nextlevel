@@ -8,15 +8,15 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "@/lib/credential";
 import SubmitButton from "@/components/form/SubmitButton";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { IconBrandGithub, IconBrandGoogle, IconCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function SignInPage() {
 
     const [state, formAction] = useFormState(signIn, {
-        status: '',
-        message: '',
+        status: null,
+        message: null,
     });
 
     return (

@@ -11,8 +11,8 @@ import { IconCheck, IconX } from "@tabler/icons-react";
 export default function UpdateProfile({user} : {user: any}) {
 
     const [state, formAction] = useFormState(updateProfile, {
-        status: '',
-        message: '',
+        status: null,
+        message: null,
     });
 
     return (

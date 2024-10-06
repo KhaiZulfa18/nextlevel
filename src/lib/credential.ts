@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 import prisma from "@/lib/prisma";
 
-export async function signIn(prevState: FormData, formData: FormData): Promise<ActionResult> {
+export async function signIn(prevState: ActionResult, formData: FormData): Promise<ActionResult> {
     
     const rawFormData = {
         email: formData.get('email') as string,
@@ -37,7 +37,7 @@ export async function signIn(prevState: FormData, formData: FormData): Promise<A
 }
 
 
-export async function signUp(prevState: FormData, formData: FormData): Promise<ActionResult> {
+export async function signUp(prevState: ActionResult, formData: FormData): Promise<ActionResult> {
     const rawFormData = {
         name: formData.get('name') as string,
         email: formData.get('email') as string,
@@ -131,7 +131,7 @@ const userSchema = z.object({
 });
 
 interface ActionResult {
-    status: number;
+    status: number | null;
 	error?: string | null;
     message?: string | null;
 }
