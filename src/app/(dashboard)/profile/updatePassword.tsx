@@ -31,7 +31,7 @@ export default function UpdatePassword({user} : {user: any}) {
                     {!user.email && (
                         <span className="text-gray-500 text-sm">No email detected. Please enter your email to use email and password login.</span>
                     )}
-                    {(user.email && !user.email_verified) && (
+                    {(user.email && !user.emailVerified) && (
                         <span className="text-gray-500 text-sm flex items-center space-x-1">
                             <IconExclamationCircle size={16} />
                             <span>We noticed your email isn't verified.</span>

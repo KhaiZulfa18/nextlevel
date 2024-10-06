@@ -14,7 +14,7 @@ export default async function Navbar() {
 
     return (
         <>
-        <header className="sticky top-0 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 md:px-8">
+        <header className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 md:px-8">
             <nav className="hidden items-center gap-8 md:flex">
                 <Link href="/" className="flex items-center gap-2 mr-8" prefetch={false}>
                     <IconMountain size={24} />
