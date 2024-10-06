@@ -1,18 +1,11 @@
 "use client";
 import { Card, CardTitle, CardHeader, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { useFormState } from "react-dom";
-import { updateProfile } from "./action";
 import { Button } from "@/components/ui/button";
 import { IconBrandGithub, IconBrandGoogle, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function UpdateAccount({user} : {user: any}) {
-
-    const [state, formAction] = useFormState(updateProfile, {
-        status: '',
-        message: '',
-    });
-
+    
     return (
         <Card className="w-full bg-background">
             <CardHeader>

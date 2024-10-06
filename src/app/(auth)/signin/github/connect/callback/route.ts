@@ -1,32 +1,30 @@
-import { google, lucia } from "@/auth";
+import { github, lucia } from "@/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import prisma from "@/lib/prisma";
-import { createUsername } from "@/lib/credential";
 
 export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
-	const storedState = cookies().get("google_oauth_state")?.value ?? null;
-	const codeVerifier = cookies().get("code_verifier")?.value ?? null;
+	const storedState = cookies().get("github_oauth_state")?.value ?? null;
 	const currentSessionCookie = cookies().get(lucia.sessionCookieName)?.value ?? null;
-	if (!code || !state || !storedState || !codeVerifier || state !== storedState) {
+	if (!code || !state || !storedState || state !== storedState) {
 		return new Response(null, {
 			status: 400
 		});
 	}
 
 	try {
-		const tokens = await google(`${process.env.HOST_NAME}/signin/google/connect/callback`).validateAuthorizationCode(code,codeVerifier);
-		
-        const googleUserResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-            headers: {
-                Authorization: `Bearer ${tokens.accessToken}`
-            }
-        });
-		const googleUser: GoogleUser = await googleUserResponse.json();
-		const googleUserId = googleUser.sub;
+		const tokens = await github.validateAuthorizationCode(code);
+		const githubUserResponse = await fetch("https://api.github.com/user", {
+			headers: {
+				Authorization: `Bearer ${tokens.accessToken}`
+			}
+		});
+		const githubUser: GitHubUser = await githubUserResponse.json();
+
+		const githubUserId = String(githubUser.id);
 
 		let currentUser = null;
 
@@ -37,8 +35,8 @@ export async function GET(request: Request): Promise<Response> {
 
         const existingAccount = await prisma.account.findFirst({
             where: {
-                provider: 'google',
-                providerId: googleUserId
+                provider: 'github',
+                providerId: githubUserId
             }
         });
 
@@ -60,8 +58,8 @@ export async function GET(request: Request): Promise<Response> {
 
         await prisma.account.create({
             data: {
-                provider: 'google',
-                providerId: googleUserId,
+                provider: 'github',
+                providerId: githubUserId,
                 userId: currentUser.id
             }
         });
@@ -70,6 +68,7 @@ export async function GET(request: Request): Promise<Response> {
             status: 302,
             headers: { Location: "/profile" }
         });
+        
 	} catch (e) {
 		// Check if the error is an instance of OAuth2RequestError
 		if (e instanceof OAuth2RequestError) {
@@ -104,8 +103,8 @@ export async function GET(request: Request): Promise<Response> {
 	}
 }
 
-interface GoogleUser {
-	sub: string;
+interface GitHubUser {
+	id: string;
+	login: string;
 	name: string;
-	email: string;
 }

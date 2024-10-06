@@ -44,9 +44,11 @@ export async function GET(request: Request): Promise<Response> {
 			});
 
 			if (existingAccount) {
-				return new Response(JSON.stringify({ error: "GitHub account is already linked to another user." }), {
-					status: 400,
-					headers: { 'Content-Type': 'application/json' }
+				return new Response(null, {
+					status: 302,
+					headers: { 
+						Location: "/profile",
+					},
 				});
 			}
 
