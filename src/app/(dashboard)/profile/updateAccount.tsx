@@ -8,11 +8,18 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { disconnectAccount } from "./action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+
+type MessageState = {
+    status: number | null;
+    message?: string | null;
+    error?: string | null;
+};
+
 export default function UpdateAccount({user} : {user: any}) {
     
-    const [openModal, setOpenModal] = useState(false);
-    const [provider, setProvider] = useState('');
-    const [message, setMessage] = useState({
+    const [openModal, setOpenModal] = useState<Boolean>(false);
+    const [provider, setProvider] = useState<String>('');
+    const [message, setMessage] = useState<MessageState>({
         status: null,
         message: null,
         error: null,
