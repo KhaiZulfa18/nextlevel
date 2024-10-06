@@ -34,7 +34,7 @@ export default function UpdatePassword({user} : {user: any}) {
                     {(user.email && !user.emailVerified) && (
                         <span className="text-gray-500 text-sm flex items-center space-x-1">
                             <IconExclamationCircle size={16} />
-                            <span>We noticed your email isn't verified.</span>
+                            <span>We noticed your email isn&apos;t verified.</span>
                             <Link href="/verify-email" className="text-blue-500 hover:text-blue-600 underline transition-colors duration-200 font-medium">Click here to verify it!</Link>
                         </span>
                     )}

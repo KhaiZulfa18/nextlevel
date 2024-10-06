@@ -20,7 +20,7 @@ export default function UpdateProfile({user} : {user: any}) {
             <form action={formAction}>
             <CardHeader>
                 <CardTitle>Edit Profile</CardTitle>
-                <CardDescription>Make changes to your profile here. Click save when you're done.</CardDescription>
+                <CardDescription>Make changes to your profile here. Click save when you&apos;re done.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-2">

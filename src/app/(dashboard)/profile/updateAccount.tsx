@@ -29,7 +29,7 @@ export default function UpdateAccount({user} : {user: any}) {
         setMessage(res);
         setOpenModal(false);
 
-    }, [provider]);
+    }, []);
 
     return (
         <Card className="w-full bg-background">

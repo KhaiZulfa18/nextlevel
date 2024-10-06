@@ -24,7 +24,7 @@ export default function SignInPage() {
             <CardHeader>
                 <CardTitle>Sign in to your account</CardTitle>
                 <CardDescription>
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?&nbsp;
                     <Link href="/signup" className="font-medium text-primary hover:underline" prefetch={false}>
                         Sign Up
                     </Link>
