@@ -65,7 +65,7 @@ export async function updatePassword(prevState: FormData,formData: FormData): Pr
 
     const currentPassword = formData.get("current_password")?.toString() || '';
     const confirmPassword = formData.get("confirm_new_password")?.toString() || '';
-    const newPassword = formData.get("new_password")?.toString();
+    const newPassword = formData.get("new_password")?.toString() || '';
     const email = formData.get("email")?.toString();
 
     // check validation 
@@ -139,6 +139,41 @@ export async function updatePassword(prevState: FormData,formData: FormData): Pr
 
     revalidatePath('/profile');
     return { status: 201, message: 'Email & Password updated successfully.' };
+}
+
+export async function disconnectAccount(provider: string): Promise<ActionResult> {
+    
+    const { user } = await validateRequest();
+    const userId = user?.id;
+
+    const provider_name = provider.toLowerCase();
+
+    const getUser = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        include:{
+            accounts: true
+        }
+    });
+
+    const isCredententialSet = (getUser?.password && getUser?.email) ? true : false;
+    const anotherProviderExists = getUser?.accounts.some(account => account.provider !== provider_name);
+
+    if(!isCredententialSet && !anotherProviderExists) {
+        revalidatePath('/profile');
+        return { status: 400, message: 'This account cannot be removed because it is your only sign in option. Please add another way to sign in before removing this account.' };
+    }
+
+    const removeAccount = await prisma.account.deleteMany({
+        where: {
+            userId: userId,
+            provider: provider_name
+        }
+    });    
+    
+    revalidatePath('/profile');
+    return { status: 201, message: 'Account disconnected successfully.' };
 }
 
 const userSchema = z.object({
