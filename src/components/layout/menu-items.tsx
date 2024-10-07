@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 interface Props {
     item: {
         label: string;
-        path: string;
+        path?: string;
         children?: any;
     };
     isSidebarOpen: boolean;

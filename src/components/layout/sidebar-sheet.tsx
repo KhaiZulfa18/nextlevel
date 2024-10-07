@@ -8,7 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/colla
 import Link from "next/link";
 import { useState } from "react";
 
-export default function SidebarSheet({user}: {user: {id: string, name: string}}) {
+export default function SidebarSheet({user}: {user: {id: string, name: string} | null}) {
 
     return (
         <Sheet>

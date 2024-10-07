@@ -3,15 +3,15 @@ import { Button } from "../ui/button";
 import clsx from "clsx";
 
 interface Props {
-    isOpen: boolean | undefined;
-    setIsOpen?: () => void;
+    isOpen?: boolean;
+    setIsOpen?: (isOpen: boolean) => void;
 }
 export default function SidebarToggle({isOpen, setIsOpen}: Props) {
 
     return (
         <div className="invisible md:visible absolute top-[12px] -right-[16px] z-20">
             <Button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setIsOpen?.(!isOpen)}
                 className="rounded-md w-8 h-8"
                 variant="outline"
                 size="icon"
