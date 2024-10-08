@@ -67,7 +67,7 @@ const MenuItemList = ({ item, index }: { item: any; index: number }) => {
                     <CollapsibleContent asChild>
                         <div className="flex flex-col pl-4 space-y-2">
                             {item.children.map((child: any, index: number) => (
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-1" key={index}>
                                     <IconChevronsRight size={12} key={index} />
                                     <Link
                                         key={index}
