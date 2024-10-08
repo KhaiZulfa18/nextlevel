@@ -1,33 +1,31 @@
+import { IconDashboard, IconUsers, IconSettings } from "@tabler/icons-react"; // Adjust this import based on your icon library
+
 export interface MenuItem {
     label: string;
-    icon?: string; // Optional, you can remove if not needed
+    icon?: React.ReactNode;
     path?: string;
-    children?: MenuItem[]; // Optional if you have sub-menus
+    children?: MenuItem[];
 }
 
 export const menuItems: MenuItem[] = [
     {
         label: 'Dashboard',
-        icon: 'IconDashboard',
+        icon: <IconDashboard size={20} />,
         path: '/dashboard',
     },
     {
         label: 'Users',
-        icon: 'IconUsers',
+        icon: <IconUsers size={20} />,
         path: '/users',
     },
     {
         label: 'Settings',
-        icon: 'settings-icon',
+        icon: <IconSettings size={20} />,
         children: [
             {
                 label: 'Profile',
-                path: '/settings/profile',
-            },
-            {
-                label: 'Account',
-                path: '/settings/account',
+                path: '/profile',
             },
         ],
     },
-  ];
+];

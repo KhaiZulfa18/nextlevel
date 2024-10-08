@@ -1,5 +1,5 @@
 "use client";
-import { IconChevronDown, IconChevronRight, IconMenu2, IconMountain } from "@tabler/icons-react";
+import { IconChevronDown, IconChevronRight, IconChevronsRight, IconDiamonds, IconDiamondsFilled, IconLogout, IconMenu2, IconMountain } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { signOut } from "@/lib/credential";
@@ -18,67 +18,80 @@ export default function SidebarSheet({user}: {user: {id: string, name: string} |
                     <span className="sr-only">Toggle navigation menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left">
+            <SheetContent side="left" className="flex flex-col">
                 <SheetHeader>
                     <SheetTitle className="flex items-center gap-2">
                         <IconMountain size={24}/>
                         <span className="text-lg font-mono">NextLevel</span>
                     </SheetTitle>
                 </SheetHeader>
-                <nav className="grid space-y-4">
+                <nav className="grid gap-1.5 font-medium">
                     <ul className="mt-6 space-y-2">
                         {menuItems.map((item, index) => (
                             <MenuItemList key={index} item={item} index={index} />
                         ))}
                     </ul>
-                    <Button variant="outline">{user?.name}</Button>
+                </nav>
+                <div className="mt-auto grid gap-2 py-2">
+                    <Button variant="outline" className="rounded-xl" asChild>
+                        <Link href="/profile">{user?.name}</Link>
+                    </Button>
                     <form action={signOut} className="w-full">
-                        <Button variant={'default'} size={'sm'} className="w-full">
+                        <Button variant={'default'} size={'sm'} className="w-full rounded-xl flex gap-2">
                             Sign Out 
+                            <IconLogout size={20} />
                         </Button>
                     </form>
-                </nav>
+                </div>
             </SheetContent>
         </Sheet>
     )
 }
 
 
-const MenuItemList = ({item, index}: {item: any, index: number}) => {
+const MenuItemList = ({ item, index }: { item: any; index: number }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <li key={index}>
-            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full border px-3 py-2 rounded-md border-accent">
-                    {item.children ? (
-                        <>
-                        <div className="">
-                            {item.label}
+            {item.children ? (
+                <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+                    <CollapsibleTrigger className="mx-[-0.65rem] w-full flex items-stretch justify-between gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-50">
+                        <div className="flex gap-4">
+                            <span>{item.icon}</span>
+                            <span>{item.label}</span>
                         </div>
                         {isOpen ? <IconChevronDown size={16} /> : <IconChevronRight size={16}/>}
-                        </>
-                    ) : (
-                        <Link key={index} href={'/'} prefetch={false}>
-                            {item.label}
-                        </Link>
-                    )}
-                </CollapsibleTrigger>
-                {item.children && (
-                    <CollapsibleContent className="pl-4" asChild>
-                        <div className="flex flex-col">
+                    </CollapsibleTrigger>
+                    <CollapsibleContent asChild>
+                        <div className="flex flex-col pl-4 space-y-2">
                             {item.children.map((child: any, index: number) => (
-                                <CollapsibleContent key={index} className="border-l px-3 py-2">
-                                    <Link key={index} href={'/'} prefetch={false}>
-                                        {child.label}
+                                <div className="flex items-center gap-1" key={index}>
+                                    <IconChevronsRight size={12} key={index} />
+                                    <Link
+                                        key={index}
+                                        href={child.path}
+                                        className="mx-[-0.65rem] flex items-stretch gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-50"
+                                    >
+                                        <span>{child.icon}</span>
+                                        <span>{child.label}</span>
                                     </Link>
-                                </CollapsibleContent>
+                                </div>
                             ))}
                         </div>
                     </CollapsibleContent>
-                )}
-            </Collapsible>
+                </Collapsible>
+            ) : (
+                <Link
+                    key={index}
+                    href={item.path}
+                    className="mx-[-0.65rem] flex items-stretch gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-50"
+                >
+                    <span>{item.icon}</span>
+                    <span>{item.label}</span>
+                </Link>
+            )}
         </li>
-    )
-}
+    );
+};
