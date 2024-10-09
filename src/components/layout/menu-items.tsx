@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 import { useState } from "react";
-import { IconBook, IconChevronDown, IconChevronRight } from "@tabler/icons-react";
+import { IconBook, IconChevronDown, IconChevronRight, IconLayoutGrid } from "@tabler/icons-react";
 import clsx from "clsx";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
@@ -11,6 +11,7 @@ interface Props {
         label: string;
         path?: string;
         children?: any;
+        active?: boolean;
     };
     isSidebarOpen: boolean;
 }
@@ -24,7 +25,7 @@ export default function MenuItems({item, isSidebarOpen}: Props) {
         <>
         {isSidebarOpen ? (
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <CollapsibleTrigger className={clsx("flex items-center w-full text-sm hover:bg-accent rounded-md",(isSidebarOpen ? 'p-2 justify-between' : 'py-2 px-1 justify-center'))}>
+                <CollapsibleTrigger className={clsx("flex items-center w-full text-sm hover:bg-accent rounded-md",(isSidebarOpen ? 'p-2 justify-between' : 'py-2 px-1 justify-center'), item.active ? 'bg-accent' : '')}>
                     <MenuItemList item={item} isSidebarOpen={isSidebarOpen} hasChildren={hasChildren} isOpen={isOpen}/>
                 </CollapsibleTrigger>
                 {hasChildren && (
@@ -39,7 +40,7 @@ export default function MenuItems({item, isSidebarOpen}: Props) {
             </Collapsible>  
         ) : (
             <DropdownMenu>
-                <DropdownMenuTrigger className={clsx("flex items-center w-full text-sm hover:bg-accent rounded-md",(isSidebarOpen ? 'p-2 justify-between' : 'py-2 px-1 justify-center'))}>
+                <DropdownMenuTrigger className={clsx("flex items-center w-full text-sm hover:bg-accent rounded-md",(isSidebarOpen ? 'p-2 justify-between' : 'py-2 px-1 justify-center'), item.active ? 'bg-accent' : '')}>
                     <MenuItemList item={item} isSidebarOpen={isSidebarOpen} hasChildren={hasChildren} isOpen={isOpen}/>
                 </DropdownMenuTrigger>
                 {hasChildren && (
@@ -63,7 +64,7 @@ export default function MenuItems({item, isSidebarOpen}: Props) {
 
 const MenuItemDropdown = ({item, index}: {item: any, index: number}) => {
     return (
-        <CollapsibleContent key={index} className="flex items-center w-full p-2 text-sm hover:bg-accent justify-between rounded-md" asChild>
+        <CollapsibleContent key={index} className={clsx("flex items-center w-full p-2 text-sm hover:bg-accent justify-between rounded-md", item.active ? 'bg-accent' : '')} asChild>
             <Link key={index} href={item.path} prefetch={false} className="">{item.label}</Link>
         </CollapsibleContent>
     )
@@ -76,7 +77,7 @@ const MenuItemList = ({item, isSidebarOpen, isOpen, hasChildren}: {item: any, is
         {hasChildren ? (
             <>
                 <div className="flex items-center gap-2">
-                    <IconBook size={20}/>
+                    {item.icon ? item.icon : <IconLayoutGrid size={20}/>}
                     {isSidebarOpen ? item.label : ''}
                 </div>
                 {isSidebarOpen ? (
@@ -84,9 +85,9 @@ const MenuItemList = ({item, isSidebarOpen, isOpen, hasChildren}: {item: any, is
                 ) : null}
             </>
         ):(
-            <Link href={'/'} prefetch={false} className={clsx("flex items-center gap-2")}>
+            <Link href={item.path} prefetch={false} className={clsx("flex items-center gap-2")}>
                 <div className="flex items-center gap-2">
-                    <IconBook size={20} />
+                    {item.icon ? item.icon : <IconLayoutGrid size={20}/>}
                     {isSidebarOpen ? item.label : ''}
                 </div>
             </Link>
