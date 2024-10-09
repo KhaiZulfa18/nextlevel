@@ -3,13 +3,16 @@ import { IconChevronDown, IconChevronRight, IconChevronsRight, IconDiamonds, Ico
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { signOut } from "@/lib/credential";
-import { menuItems } from "@/utils/menu";
+import { useMenuItems } from "@/utils/menu";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 import Link from "next/link";
 import { useState } from "react";
+import clsx from "clsx";
 
 export default function SidebarSheet({user}: {user: {id: string, name: string} | null}) {
 
+    const menuItems = useMenuItems();
+    
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -57,22 +60,22 @@ const MenuItemList = ({ item, index }: { item: any; index: number }) => {
         <li key={index}>
             {item.children ? (
                 <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                    <CollapsibleTrigger className="mx-[-0.65rem] w-full flex items-stretch justify-between gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-50">
+                    <CollapsibleTrigger className={clsx("mx-[-0.65rem] w-full flex items-stretch justify-between gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100")}>
                         <div className="flex gap-4">
                             <span>{item.icon}</span>
                             <span>{item.label}</span>
                         </div>
                         {isOpen ? <IconChevronDown size={16} /> : <IconChevronRight size={16}/>}
                     </CollapsibleTrigger>
-                    <CollapsibleContent asChild>
+                    <CollapsibleContent className="mt-1" asChild>
                         <div className="flex flex-col pl-4 space-y-2">
                             {item.children.map((child: any, index: number) => (
-                                <div className="flex items-center gap-1" key={index}>
+                                <div className={clsx("flex items-center gap-1 rounded-xl px-3", child.active ? 'bg-accent' : '')} key={index}>
                                     <IconChevronsRight size={12} key={index} />
                                     <Link
                                         key={index}
                                         href={child.path}
-                                        className="mx-[-0.65rem] flex items-stretch gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-50"
+                                        className={clsx("mx-[-0.65rem] flex min-w-full items-stretch gap-4 rounded-xl py-2 text-gray-900 dark:text-gray-100 hover:bg-accent")}
                                     >
                                         <span>{child.icon}</span>
                                         <span>{child.label}</span>
@@ -86,7 +89,7 @@ const MenuItemList = ({ item, index }: { item: any; index: number }) => {
                 <Link
                     key={index}
                     href={item.path}
-                    className="mx-[-0.65rem] flex items-stretch gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-50"
+                    className={clsx("mx-[-0.65rem] flex items-stretch gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:bg-accent", item.active ? 'bg-accent' : '')}
                 >
                     <span>{item.icon}</span>
                     <span>{item.label}</span>
