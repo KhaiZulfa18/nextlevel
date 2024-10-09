@@ -23,7 +23,7 @@ export default async function NavbarDashboard()  {
             <div className="md:hidden flex w-full items-center justify-between gap-2">
                 <SidebarSheet user={user}/>
                 <Link href="#" prefetch={false} className="flex items-stretch gap-2">
-                    <IconMountain size={24}/>
+                    <IconMountain size={24} className="hidden md:block"/>
                     <span className="text-lg font-mono">NextLevel</span>
                 </Link>
                 <ThemeToggle/>
