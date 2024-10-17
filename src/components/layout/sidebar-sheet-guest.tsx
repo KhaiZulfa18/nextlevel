@@ -1,5 +1,5 @@
 "use client";
-import { IconChevronDown, IconChevronRight, IconChevronsRight, IconDiamonds, IconDiamondsFilled, IconLogout, IconMenu2, IconMountain } from "@tabler/icons-react";
+import { IconBook2, IconChevronDown, IconChevronRight, IconChevronsRight, IconDashboard, IconLogout, IconMenu2, IconMountain } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { signOut } from "@/lib/credential";
@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useState } from "react";
 import clsx from "clsx";
 
-export default function SidebarSheet({user}: {user: {id: string, name: string} | null}) {
+export default function SidebarSheetGuest({user}: {user: {id: string, name: string} | null}) {
 
     const menuItems = useMenuItems();
     
@@ -30,21 +30,40 @@ export default function SidebarSheet({user}: {user: {id: string, name: string} |
                 </SheetHeader>
                 <nav className="grid gap-1.5 font-medium">
                     <ul className="mt-6 space-y-2">
-                        {menuItems.map((item, index) => (
-                            <MenuItemList key={index} item={item} index={index} />
-                        ))}
+                        <Link
+                            href={'/dashboard'}
+                            className={clsx("mx-[-0.65rem] flex items-stretch gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:bg-accent")}
+                        >
+                            <span><IconDashboard size={20} /> </span>
+                            <span>Dashboard</span>
+                        </Link>
+                        <Link
+                            href={'/docs'}
+                            className={clsx("mx-[-0.65rem] flex items-stretch gap-4 rounded-xl px-3 py-2 text-gray-900 dark:text-gray-100 hover:bg-accent")}
+                        >
+                            <span><IconBook2 size={20} /> </span>
+                            <span>Docs</span>
+                        </Link>
                     </ul>
                 </nav>
                 <div className="mt-auto grid gap-2 py-2">
-                    <Button variant="outline" className="rounded-xl" asChild>
-                        <Link href="/profile">{user?.name}</Link>
-                    </Button>
-                    <form action={signOut} className="w-full">
-                        <Button variant={'default'} size={'sm'} className="w-full rounded-xl flex gap-2">
-                            Sign Out 
-                            <IconLogout size={20} />
+                    {user ? (
+                        <>
+                        <Button variant="outline" className="rounded-xl" asChild>
+                            <Link href="/profile">{user?.name}</Link>
                         </Button>
-                    </form>
+                        <form action={signOut} className="w-full">
+                            <Button variant={'default'} size={'sm'} className="w-full rounded-xl flex gap-2">
+                                Sign Out 
+                                <IconLogout size={20} />
+                            </Button>
+                        </form>
+                        </>
+                    ) : (
+                        <Button variant="default" className="rounded-xl" asChild>
+                            <Link href="/signin">Sign In</Link>
+                        </Button>
+                    )}
                 </div>
             </SheetContent>
         </Sheet>
