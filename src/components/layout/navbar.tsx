@@ -6,6 +6,7 @@ import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { validateRequest } from "@/auth";
 import { signOut } from "@/lib/credential";
 import UserNav from "../layout/user-nav";
+import SidebarSheetGuest from "./sidebar-sheet-guest";
 
 
 export default async function Navbar() {
@@ -34,7 +35,7 @@ export default async function Navbar() {
                 <ThemeToggle />
             </div>
             <div className="md:hidden flex w-full items-center justify-between gap-2">
-                <Sheet>
+                {/* <Sheet>
                     <SheetTrigger asChild>
                         <Button variant="outline" size="icon" className="rounded-xl lg:hidden">
                             <IconMenu2 size={24} />
@@ -82,7 +83,8 @@ export default async function Navbar() {
                             )}
                         </div>
                     </SheetContent>
-                </Sheet>
+                </Sheet> */}
+                <SidebarSheetGuest user={user}/>
                 <Link href="#" prefetch={false} className="flex items-stretch gap-2">
                     <IconMountain size={24} className="hidden md:block"/>
                     <span className="text-lg font-mono">NextLevel</span>
