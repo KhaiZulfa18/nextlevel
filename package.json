@@ -27,6 +27,7 @@
     "@tabler/icons": "^3.14.0",
     "@tabler/icons-react": "^3.14.0",
     "@tanstack/react-query": "^5.56.2",
+    "@tanstack/react-table": "^8.20.5",
     "arctic": "^1.9.2",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
