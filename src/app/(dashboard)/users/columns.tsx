@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
-import { IconArrowsUpDown, IconDots, IconSelector, } from "@tabler/icons-react";
+import { IconDots, IconSelector, } from "@tabler/icons-react";
 
 export type Users = {
     username: string,
@@ -24,6 +24,7 @@ export const columns: ColumnDef<Users>[] = [
                 </Button>
             )
         },
+        size: 150
     },
     {
         accessorKey: "name",
@@ -37,6 +38,7 @@ export const columns: ColumnDef<Users>[] = [
                 </Button>
             )
         },
+        size: 150
     },
     {
         accessorKey: "email",
@@ -53,7 +55,8 @@ export const columns: ColumnDef<Users>[] = [
             const obfuscatedEmail = `${obfuscatedName}@${domain}`;
 
             return <div className="text-left">{obfuscatedEmail}</div>;
-        }
+        },
+        size: 150
     },
     {
         id: "actions",
@@ -80,5 +83,6 @@ export const columns: ColumnDef<Users>[] = [
             )
         },
         enableHiding: false,
+        size: 50
     }
 ]
