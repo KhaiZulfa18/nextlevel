@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
-import { IconDots, } from "@tabler/icons-react";
+import { IconArrowsUpDown, IconDots, IconSelector, } from "@tabler/icons-react";
 
 export type Users = {
     username: string,
@@ -14,11 +14,29 @@ export type Users = {
 export const columns: ColumnDef<Users>[] = [
     {
         accessorKey: "username",
-        header: "Username",
+        header: ({ column }) => {
+            return (
+                <Button variant={'ghost'}
+                    className="w-full flex justify-between"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Username
+                    <IconSelector size={16}/>
+                </Button>
+            )
+        },
     },
     {
         accessorKey: "name",
-        header: "Name",
+        header: ({ column }) => {
+            return (
+                <Button variant={'ghost'}
+                    className="w-full flex justify-between"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Name
+                    <IconSelector size={16}/>
+                </Button>
+            )
+        },
     },
     {
         accessorKey: "email",
@@ -60,6 +78,7 @@ export const columns: ColumnDef<Users>[] = [
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
-        }
+        },
+        enableHiding: false,
     }
 ]
