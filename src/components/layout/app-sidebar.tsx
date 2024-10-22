@@ -12,7 +12,7 @@ const SidebarTrigger = () => {
 
     return (
         <div className={clsx("invisible md:visible absolute top-[12px] z-20", state === 'collapsed' ? '-right-[36px]' : '-right-[16px]' )}>
-                <Button onClick={(event) => toggleSidebar() } className="rounded-md w-8 h-8"  variant="outline" size="icon" >
+                <Button onClick={toggleSidebar} className="rounded-md w-8 h-8"  variant="outline" size="icon" >
                     <IconChevronLeft
                     className={clsx(
                         "h-4 w-4 transition-transform ease-in-out duration-500",
