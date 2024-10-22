@@ -20,8 +20,8 @@ export default function AppSidebarItem({item, index} : {item: any, index: number
                         <SidebarMenuSub>
                             {item.children.map((child: any, index: number) => (
                                 <SidebarMenuSubItem key={index}>
-                                    <SidebarMenuButton key={index}>
-                                        <>{child.label}</>
+                                    <SidebarMenuButton key={index} isActive={child.active}>
+                                        {child.path && <Link href={child.path}>{child.icon} {child.label}</Link>}
                                     </SidebarMenuButton>
                                 </SidebarMenuSubItem>
                             ))}
@@ -31,7 +31,7 @@ export default function AppSidebarItem({item, index} : {item: any, index: number
             </Collapsible>
         ) : (
             <SidebarMenuItem key={index}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild isActive={item.active}>
                     {item.path && <Link href={item.path}>{item.icon} {item.label}</Link>}
                 </SidebarMenuButton>
             </SidebarMenuItem>
