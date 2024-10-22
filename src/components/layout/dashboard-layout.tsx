@@ -5,6 +5,8 @@ import Sidebar from "./sidebar";
 import { useState } from "react";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
 import { useStore } from "zustand";
+import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
+import AppSidebar from "./app-sidebar";
 
 interface Props {
     children: React.ReactNode
@@ -18,12 +20,9 @@ export default function DashboardLayout({children}: Props) {
   
     return (
         <>
-            <Sidebar/>
+            <AppSidebar/>
             <main
-                className={clsx(
-                "min-h-[calc(100vh_-_56px)] transition-[margin-left] ease-in-out duration-300",
-                    sidebar.isOpen === false ? "lg:ml-[112px]" : "md:ml-64"
-                )}
+                className={clsx("w-full min-h-[calc(100vh_-_56px)] transition-[margin-left] ease-in-out duration-300")}
             >   
                 {children}
             </main>
