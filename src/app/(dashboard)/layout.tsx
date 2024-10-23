@@ -18,9 +18,9 @@ export default async function Layout({children}: {children: React.ReactNode}) {
 
     return (
         <SidebarProvider>
-        <DashboardLayout>
-            {children}
-        </DashboardLayout>
+            <DashboardLayout>
+                {children}
+            </DashboardLayout>
         </SidebarProvider>
     )
 }
