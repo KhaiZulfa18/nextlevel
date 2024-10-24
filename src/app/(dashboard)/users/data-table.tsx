@@ -37,7 +37,7 @@ export function DataTable<TData, TValue>({ columns, data,}: DataTableProps<TData
 
     return (
         <div>
-            <div className="flex items-center py-4">
+            <div className="flex items-center py-2 md:py-4 justify-between md:justify-normal gap-1">
                 <Input placeholder="Filter Name..." value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="max-w-sm"/>
@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({ columns, data,}: DataTableProps<TData
                 </DropdownMenu>
             </div>
             <div className="rounded-md border">
-                <Table>
+                <Table className="text-xs md:text-sm">
                     <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
