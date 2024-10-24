@@ -2,10 +2,9 @@ import Link from "next/link";
 import ThemeToggle from "../theme/theme-toggle";
 import { IconChevronDown, IconMenu2, IconMountain } from "@tabler/icons-react";
 import UserNav from "../layout/user-nav";
-import { Input } from "../ui/input";
 import { validateRequest } from "@/auth";
 import SidebarSheet from "./sidebar-sheet";
-import { SidebarTrigger } from "../ui/sidebar";
+import { SidebarMobileToggle } from "./app-sidebar-trigger";
 
 export default async function NavbarDashboard()  {
 
@@ -22,8 +21,7 @@ export default async function NavbarDashboard()  {
                 <ThemeToggle />
             </div>
             <div className="md:hidden flex w-full items-center justify-between gap-2">
-                {/* <SidebarSheet user={user}/> */}
-                <SidebarTrigger/>
+                <SidebarMobileToggle/>
                 <Link href="#" prefetch={false} className="flex items-stretch gap-2">
                     <IconMountain size={24} className="hidden md:block"/>
                     <span className="text-lg font-mono">NextLevel</span>
