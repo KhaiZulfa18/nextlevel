@@ -1,11 +1,17 @@
+"use server";
 import prisma from "@/lib/prisma";
 
-export async function getMonthlyUsers() {
+interface MonthlyUserCount {
+    month: Date;
+    user_count: number;
+}
 
-    const userPerMonth = await prisma.$queryRaw`
+export async function getMonthlyUsers(): Promise<MonthlyUserCount> {
+
+    const userPerMonth = await prisma.$queryRaw<MonthlyUserCount>`
         SELECT 
         DATE_TRUNC('month', "created_at") AS month, 
-        COUNT(id) AS user_count
+        COUNT(id)::int AS user_count
         FROM "User"
         GROUP BY month
         ORDER BY month ASC;
