@@ -9,7 +9,7 @@ export default async function Dashboard({}) {
     
     return (
         <ContentLayout>
-            <Card className="w-1/2">
+            <Card className="w-full md:w-1/2">
                 <CardHeader>
                     <CardTitle className="text-lg font-semibold">User Growth</CardTitle>
                     <CardDescription className="text-sm text-gray-500">Monthly user registration</CardDescription>
